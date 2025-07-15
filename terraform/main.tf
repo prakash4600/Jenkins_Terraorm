@@ -8,7 +8,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "jenkins-rg"
+  name     = "jenkins-rg-vm"
   location = var.location
 }
 
