@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
       steps {
-        git 'https://github.com/prakash4600/Jenkins_Terraorm.git'  // Replace with your repo
+        git 'https://github.com/prakash4600/Jenkins_Terraorm.git'  // Replace with your repo if needed
       }
     }
 
