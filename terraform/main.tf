@@ -44,34 +44,36 @@ resource "azurerm_public_ip" "jenkins_public_ip" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
-  sku                 = "Basic"
+  sku                 = "Standard"
 }
 
-resource "azurerm_linux_virtual_machine" "vm" {
+resource "azurerm_linux_virtual_machine" "jenkins_vm" {
   name                = "jenkins-vm"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1s"
   admin_username      = "azureuser"
-  network_interface_ids = [
-    azurerm_network_interface.nic.id,
-  ]
-  admin_password = "Azure12345678"  # Or use SSH keys for better security
+  admin_password      = "Jenkins12345!" # ⚠️ Replace with a strong password
 
   disable_password_authentication = false
+
+  network_interface_ids = [azurerm_network_interface.nic.id]
 
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "jenkins-osdisk"
   }
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "22_04-lts-gen2"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts"
     version   = "latest"
   }
 
-  custom_data = filebase64("cloud-init.yaml") # cloud-init for Jenkins setup
+  custom_data = filebase64("${path.module}/jenkins-cloudinit.yaml")
+
+  tags = {
+    environment = "dev"
+  }
 }
