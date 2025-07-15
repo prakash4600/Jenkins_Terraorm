@@ -9,11 +9,11 @@ pipeline {
   }
 
   stages {
-    stage('Checkout Code') {
-      steps {
-        git 'https://github.com/prakash4600/Jenkins_Terraorm.git'  // Replace with your repo if needed
-      }
-    }
+  stage('Checkout Code') {
+    steps {
+      git branch: 'main', url: 'https://github.com/prakash4600/Jenkins_Terraorm.git'
+    }  
+  }
 
     stage('Terraform Init') {
       steps {
