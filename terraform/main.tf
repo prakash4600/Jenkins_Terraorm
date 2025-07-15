@@ -71,7 +71,7 @@ resource "azurerm_linux_virtual_machine" "jenkins_vm" {
     version   = "latest"
   }
 
-  custom_data = filebase64("${path.module}/jenkins-cloudinit.yaml")
+  custom_data = filebase64("${path.module}/cloudinit.yaml")
 
   tags = {
     environment = "dev"
